@@ -6,7 +6,7 @@
 This repository contains the code for the paper:
 
 > **"AI-Based Estimation of Indoor Illuminance from Smartphone Photographs: A Pilot Study for Occupational Health Applications"**  
-> Anton Buryy, [Journal], [Year]  
+> Anton Buryy, [Journal], 2026  
 > DOI: [to be added upon publication]
 
 ## Overview
