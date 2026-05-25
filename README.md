@@ -6,7 +6,7 @@
 This repository contains the code for the paper:
 
 > **"AI-Based Estimation of Indoor Illuminance from Smartphone Photographs: A Pilot Study for Occupational Health Applications"**  
-> Anton Buryy, [Journal], 2026  
+> Anton Buryi, [Journal], 2026  
 > DOI: [to be added upon publication]
 
 ## Overview
@@ -50,7 +50,7 @@ ai-lux-estimation/
 
 The dataset (5,814 photographs with lux annotations) is hosted on Google Drive and is **not** included in this repository due to size constraints.
 
-- **Dataset link:** [ CSUN ScholarWorks URL]  (https://scholarworks.calstate.edu/concern/datasets/kp78gs416)
+- **Dataset link:** https://scholarworks.calstate.edu/concern/datasets/kp78gs416
 - **Master feature CSV:** `AI_Lux_Project/Experiments_4/optionB_master_enriched37_with_pointid_grid5.csv`
 - See `data/README.md` for full dataset description.
 
@@ -146,4 +146,4 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ## Contact
 
-Anton Buryy — GitHub: [@buryianton](https://github.com/buryianton)
+Anton Buryi — GitHub: [@buryianton](https://github.com/buryianton)
