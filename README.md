@@ -133,7 +133,7 @@ If you use this code or dataset, please cite:
 @article{buryy2025lux,
   title   = {AI-Based Estimation of Indoor Illuminance from Smartphone Photographs:
              A Pilot Study for Occupational Health Applications},
-  author  = {Buryy, Anton},
+  author  = {Buryi, Anton},
   journal = {[Journal name]},
   year    = {2025},
   doi     = {[to be added]}
