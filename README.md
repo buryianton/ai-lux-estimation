@@ -11,7 +11,7 @@ This repository contains the code for the paper:
 
 ## Overview
 
-We trained machine-learning models to estimate indoor illuminance (lux) from fixed-geometry smartphone photographs, targeting occupational health screening applications in Russia where routine workplace illuminance measurements are mandatory.
+Machine-learning models were trained to estimate indoor illuminance (lux) from fixed-geometry smartphone photographs, targeting occupational health screening applications for workplace illuminance measurements.
 
 **Key results:**
 | Surface condition | Best model | MAPE (session split) | MAPE (physical-point split) |
@@ -50,7 +50,8 @@ ai-lux-estimation/
 
 The dataset (5,814 photographs with lux annotations) is hosted on Google Drive and is **not** included in this repository due to size constraints.
 
-- **Dataset link:** https://scholarworks.calstate.edu/concern/datasets/kp78gs416
+- **Dataset link:** https://zenodo.org/records/20499312
+- **Additional link: https://scholarworks.calstate.edu/concern/datasets/kp78gs416
 - **Master feature CSV:** `AI_Lux_Project/Experiments_4/optionB_master_enriched37_with_pointid_grid5.csv`
 - See `data/README.md` for full dataset description.
 
