@@ -7,7 +7,7 @@ to train machine-learning models for indoor illuminance estimation.
 
 **Camera:** Samsung Galaxy A16  
 **Fixed settings:** ISO 50, 1/50 s exposure, white balance 4000 K, 45° tilt, 31 cm height above surface  
-**Lux meter:** Lutron LX-101A Lux Meter (ISO 17025-grade)  
+**Lux meter:** Lutron LX-101A Lux Meter 
 **Total annotated images:** 3,157 (with complete 5-point lux readings)  
 **Target lux range:** 48–1,833 lux (mean = 608, SD = 295)
 
