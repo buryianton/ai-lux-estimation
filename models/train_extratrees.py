@@ -1,16 +1,17 @@
 """
 ExtraTrees regressor with log-space regression for indoor illuminance estimation.
 
-This is the best-performing model in the study:
-  - White paper:        MAPE = 3.28% (session split), 4.55% (physical-point split)
-  - Table surfaces:     MAPE = 6.85% (session split, log-space), 8.74% (physical-point split)
-  - White + tables:     MAPE = 4.95% (session split, log-space)
+This is the best-performing model in the study (v4 dataset, 5,814 images):
+  - White paper (5pt):  MAPE = 4.13% (session split), 3.81% (physical-point split)
+  - White paper (all):  MAPE = 3.61% (session split), 5.20% (physical-point split)
+  - Table surfaces:     MAPE = 16.42% (session split), 16.15% (physical-point split)
+  - White + tables:     MAPE = 6.01% (session split), 10.08% (physical-point split)
 
 Log-space regression
 --------------------
 Training on log1p(lux) rather than raw lux values consistently reduces MAPE on
 table surfaces by ~0.4 percentage points. The improvement is because lux spans
-almost two orders of magnitude (48–1833 lux), and a multiplicative error model
+almost two orders of magnitude (1–2280 lux), and a multiplicative error model
 (log-space) better matches the physical measurement structure than an additive one.
 
 Grouped splits
@@ -86,7 +87,7 @@ def train_evaluate_extratrees(csv_path: str,
     Parameters
     ----------
     csv_path : str
-        Path to the master feature CSV (e.g. optionB_master_enriched37_with_pointid_grid5.csv).
+        Path to the master feature CSV (e.g. feature_master_latest.csv).
     subset : str
         Surface subset: 'white_paper', 'table', 'white_plus_tables', or 'all'.
     split_strategy : str
