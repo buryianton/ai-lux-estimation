@@ -6,7 +6,7 @@ The dataset consists of **5,814 RGB photographs** collected under controlled con
 to train machine-learning models for indoor illuminance estimation.
 
 **Camera:** Samsung Galaxy A16  
-**Fixed settings:** ISO 50, 1/20 s exposure, white balance 4000 K, 45° tilt, 31 cm height above surface  
+**Fixed settings:** ISO 50, 1/50 s exposure, white balance 4000 K, 45° tilt, 31 cm height above surface  
 **Lux meter:** Lutron LX-101A  
 **Total images:** 5,814 (2,300 with central measurement only; 3,514 with full 5-point lux readings)  
 **Illuminance range:** 2–2,280 lux (central measurements); 1–2,280 lux (all measured points)
