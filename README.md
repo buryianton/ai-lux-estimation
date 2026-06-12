@@ -59,7 +59,7 @@ The dataset (5,814 photographs with lux annotations) is hosted on Zenodo:
 - See `data/README.md` for full dataset description.
 
 **Camera:** Samsung Galaxy A16  
-**Fixed settings:** ISO 50, exposure 1/20 s, white balance 4000 K, 45° tilt, 31 cm height  
+**Fixed settings:** ISO 50, exposure 1/50 s, white balance 4000 K, 45° tilt, 31 cm height  
 **Lux meter:** Lutron LX-101A  
 **Illuminance range:** 2–2,280 lux (central measurements); 1–2,280 lux (all measured points)
 
