@@ -9,7 +9,7 @@ to train machine-learning models for indoor illuminance estimation.
 **Fixed settings:** ISO 50, 1/50 s exposure, white balance 4000 K, 45° tilt, 31 cm height above surface  
 **Lux meter:** Lutron LX-101A Lux Meter 
 **Total annotated images:** 3,157 (with complete 5-point lux readings)  
-**Target lux range:** 48–1,833 lux (mean = 608, SD = 295)
+**Target lux range:** 2 to 2,280 lux (mean = 608, SD = 295)
 
 ## Access
 
@@ -27,10 +27,10 @@ Shape: 3,157 rows × 325 columns (294 numeric features + metadata + lux labels).
 
 | Surface group     | n images | Description |
 |---|---|---|
-| colored_paper     | 1,465    | 24 colored paper sheets (blush, burgundy, cool red, dark indigo, deep blue, forest green, grass green, lavender, light green, magenta, maroon, midnight blue, navy blue, orange, purple, red, rose, royal blue, steel blue, teal, yellow, and others) |
-| white_paper       | 1,096    | Standard white reference sheet (≈95% reflectance) |
-| table             | 1,013    | 10 bare table surfaces (various materials and colors) |
-| other             | 549      | Additional surface types |
+| colored_paper     | 2,376    | 24 colored paper sheets (blush, burgundy, cool red, dark indigo, deep blue, forest green, grass green, lavender, light green, magenta, maroon, midnight blue, navy blue, orange, purple, red, rose, royal blue, steel blue, teal, yellow, and others) |
+| white_paper       | 1,563    | Standard white reference sheet (≈95% reflectance) |
+| table             | 1,505    | 10 bare table surfaces (various materials and colors) |
+| other             | 370      | Additional surface types |
 
 ## Lighting Conditions
 
