@@ -1,10 +1,11 @@
 """
 XGBoost regressor with log-space regression for indoor illuminance estimation.
 
-XGBoost wins the strictest generalization test:
-  Physical-point split, table surfaces:  MAPE = 8.55% (log-space)
-  Physical-point split, white + tables:  MAPE = 9.15% (log-space)
-  Session split, white + tables:         MAPE = 4.87% (log-space)  ← best overall
+XGBoost results (v4 dataset, 5,814 images):
+  Physical-point split, white paper (5pt):   MAPE = 3.81%
+  Physical-point split, table surfaces:      MAPE = 16.15%
+  Physical-point split, white + tables:      MAPE = 10.08%
+  Session split, white + tables:             MAPE = 6.01%  ← best overall for mixed surfaces
 
 XGBoost vs ExtraTrees
 ---------------------
