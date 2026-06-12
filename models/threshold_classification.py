@@ -9,16 +9,16 @@ fine visual tasks). Rather than estimating the exact lux value, a binary classif
 can determine whether illuminance is above or below the required threshold — a
 simpler and more reliable task that is directly actionable for compliance screening.
 
-Results from this study
+Results from this study (v4 dataset, 5,814 images)
 -----------------------
-  Threshold = 200 lux, white_plus_tables, physical-point split:
-    AUC = 0.996, accuracy = 0.97, balanced accuracy = 0.93  (n_test = 422)
+  Threshold = 200 lux, white+table (5pt), physical-point split:
+    AUC = 1.000, accuracy = 0.984, balanced accuracy = 0.992  (n_test = 189)
 
-  Threshold = 500 lux, white_paper, session split:
-    AUC = 1.000, accuracy = 0.995, balanced accuracy = 0.994  (n_test = 220)
+  Threshold = 500 lux, white_paper (5pt), session split:
+    AUC = 0.999, accuracy = 0.977, balanced accuracy = 0.974  (n_test = 177)
 
-  Threshold = 200 lux (5-point mean), white_paper, session split:
-    AUC ≈ 1.000, accuracy = 1.000  (n_test = 31 sessions)
+  Threshold = 200 lux, white_paper (5pt), session split:
+    AUC = 1.000, accuracy = 0.994, balanced accuracy = 0.969  (n_test = 177)
 
 Why classification outperforms regression for compliance
 --------------------------------------------------------
