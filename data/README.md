@@ -1,93 +1,162 @@
-# Dataset Description
+# AI-Based Indoor Illuminance Estimation from Smartphone Images
+
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+This repository contains the code for the paper:
+
+> **"AI-Based Estimation of Indoor Illuminance from Smartphone Photographs: A Pilot Study for Occupational Health Applications"**  
+> Anton Buryi, [Journal], [Year]  
+> DOI: [to be added upon publication]
 
 ## Overview
 
-The dataset consists of **5,814 RGB photographs** collected under controlled conditions
-to train machine-learning models for indoor illuminance estimation.
+We trained machine-learning models to estimate indoor illuminance (lux) from fixed-geometry smartphone photographs, targeting occupational health screening applications where routine workplace illuminance measurements are mandatory.
+
+**Key results (v4 dataset, 5,814 images):**
+
+| Surface condition | Best model | MAPE (session split) | MAPE (physical-point split) |
+|---|---|---|---|
+| White paper (5pt) | ExtraTrees | 4.13% | 3.81% |
+| White paper (all labels) | ExtraTrees | 3.61% | 5.20% |
+| Table surfaces (5pt) | ExtraTrees | 16.42% | 16.15% |
+| White + tables (5pt) | ExtraTrees | 6.01% | 10.08% |
+| Threshold classification (AUC) | ExtraTrees | ≥0.986 | ≥0.996 |
+
+## Repository Structure
+
+```
+ai-lux-estimation/
+├── features/
+│   └── extract_features.py          # Core feature extraction pipeline
+├── models/
+│   ├── train_extratrees.py          # ExtraTrees regression
+│   ├── train_xgboost.py             # XGBoost regression
+│   └── threshold_classification.py  # Pass/fail compliance screening
+├── evaluation/
+│   ├── grouped_split.py             # Session and physical-point grouped splits
+│   └── metrics.py                   # MAPE, MAE, RMSE, R², threshold metrics
+├── notebooks/
+│   ├── 01_benchmark_all_models.ipynb      # Full model comparison
+│   ├── 02_threshold_classification.ipynb  # Compliance screening analysis
+│   └── 03_feature_importance.ipynb        # Feature importance analysis
+├── data/
+│   └── README.md                    # Dataset description and access instructions
+├── results/
+│   └── summary_table.md             # All reported results
+├── CHANGELOG.md
+├── requirements.txt
+└── README.md
+```
+
+## Dataset
+
+The dataset (5,814 photographs with lux annotations) is hosted on Zenodo:
+
+- **Dataset DOI:** [https://doi.org/10.5281/zenodo.20499312](https://doi.org/10.5281/zenodo.20499312)
+- **Master annotation CSV:** `annotation_master_latest.csv` (5,814 rows × 23 columns)
+- **Master feature CSV:** `feature_master_latest.csv` (5,814 rows × 133 columns)
+- See `data/README.md` for full dataset description.
 
 **Camera:** Samsung Galaxy A16  
-**Fixed settings:** ISO 50, 1/50 s exposure, white balance 4000 K, 45° tilt, 31 cm height above surface  
-**Lux meter:** Lutron LX-101A Lux Meter 
-**Total annotated images:** 3,157 (with complete 5-point lux readings)  
-**Target lux range:** 2 to 2,280 lux (mean = 608, SD = 295)
+**Fixed settings:** ISO 50, exposure 1/20 s, white balance 4000 K, 45° tilt, 31 cm height  
+**Lux meter:** Lutron LX-101A  
+**Illuminance range:** 2–2,280 lux (central measurements); 1–2,280 lux (all measured points)
 
-## Access
+## Installation
 
-The full dataset (photos + annotations) is hosted on Google Drive due to size:
-
-**[→ Download from Google Drive](https://drive.google.com/drive/folders/18vgAnvUA8uLOCT_fZ1HK85zBR4VqMzUk)**
-
-The master feature CSV used for all experiments is:
-```
-AI_Lux_Project/Experiments_4/optionB_master_enriched37_with_pointid_grid5.csv
-```
-Shape: 3,157 rows × 325 columns (294 numeric features + metadata + lux labels).
-
-## Surface Conditions
-
-| Surface group     | n images | Description |
-|---|---|---|
-| colored_paper     | 2,376    | 24 colored paper sheets (blush, burgundy, cool red, dark indigo, deep blue, forest green, grass green, lavender, light green, magenta, maroon, midnight blue, navy blue, orange, purple, red, rose, royal blue, steel blue, teal, yellow, and others) |
-| white_paper       | 1,563    | Standard white reference sheet (≈95% reflectance) |
-| table             | 1,505    | 10 bare table surfaces (various materials and colors) |
-| other             | 370      | Additional surface types |
-
-## Lighting Conditions
-
-Two adjustable LED lamps were used in separate rooms:
-- **Lamp 1:** 3 color temperatures (warm ~2700 K, neutral ~4000 K, cool ~6500 K)
-- **Lamp 2:** 4 color temperatures
-
-Each lamp's dimmer was used to generate multiple illuminance levels per color temperature,
-spanning from dim (≈50 lux) to bright (≈1800 lux) indoor conditions.
-
-## Measurement Grid
-
-Each photograph documents illuminance at **5 locations** using a fixed grid:
-
-```
-  UL -------- UR
-  |           |
-  |     C     |
-  |           |
-  LL -------- LR
+```bash
+git clone https://github.com/buryianton/ai-lux-estimation.git
+cd ai-lux-estimation
+pip install -r requirements.txt
 ```
 
-- **C:** center of the image
-- **UL, UR, LR, LL:** four corner intersections of a 3×3 grid overlay
+## Quick Start
 
-The camera grid overlay (displayed on-screen during shooting) ensured that all
-measurement points were photographically consistent across sessions.
+### 1. Train and evaluate the best model (ExtraTrees on white paper)
 
-## Annotation Format
+```python
+from models.train_extratrees import train_evaluate_extratrees
 
-Lux values are stored in `annotations_long_updated.csv` with one row per measurement point
-and in the master feature CSV as columns: `lux_C`, `lux_UL`, `lux_UR`, `lux_LR`, `lux_LL`.
+results = train_evaluate_extratrees(
+    csv_path='path/to/feature_master_latest.csv',
+    subset='white_paper',
+    split_strategy='session',
+    log_space=False
+)
+print(f"MAPE: {results['metrics']['MAPE']:.2f}%")
+```
 
-The column `target_lux` holds the lux reading for the center point (C), which is the
-primary prediction target throughout this study.
+### 2. Run the full benchmark (reproduces paper tables)
 
-## Data Collection Protocol
+```bash
+python models/train_extratrees.py --csv path/to/feature_master_latest.csv --all
+python models/train_xgboost.py --csv path/to/feature_master_latest.csv --all
+```
 
-1. Set lamp to target color temperature and dimmer level
-2. Record lux at all 5 grid points with TES-1330A
-3. Immediately capture photograph (camera settings locked)
-4. Repeat for all surface conditions
-5. Complete the full procedure twice with a slight camera position perturbation
+### 3. Threshold classification (compliance screening)
 
-Sessions were tracked with a unique `session` identifier; unique spatial positions
-with `physical_point_id` (25 unique positions across all sessions).
+```python
+from models.threshold_classification import train_threshold_classifier
 
-## Key Files in the Feature CSV
+results = train_threshold_classifier(
+    csv_path='path/to/feature_master_latest.csv',
+    threshold_lux=500,
+    subset='white_paper',
+    split_strategy='session'
+)
+print(f"AUC: {results['metrics']['AUC']:.4f}")
+```
 
-| Column | Description |
-|---|---|
-| `target_lux` | Center-point lux (primary prediction target) |
-| `surface_group` | `white_paper` / `table` / `colored_paper` / `other` |
-| `session` | Unique session ID (used for grouped train-test split) |
-| `physical_point_id` | Unique spatial position ID (used for strict grouped split) |
-| `C_mean_luma` … `LL_mean_sat_proxy` | Per-ROI image features (5 ROIs × 7 features = 35) |
-| `square_*` | Square context region features |
-| `sq_r{i}_c{j}_*` | 5×5 grid cell features (25 cells × 2 features = 50) |
-| `square_cell_r{i}_c{j}_*` | Alternative prefix for grid features |
-| `*_minus_*` | Spatial difference features (top-ranked by feature importance) |
+### 4. Run all threshold configurations
+
+```bash
+python models/threshold_classification.py \
+    --csv path/to/feature_master_latest.csv --all
+```
+
+## Reproducing Paper Results
+
+All results can be reproduced by running the notebooks in order:
+
+```bash
+# In Google Colab (recommended — data is on Drive):
+# Open notebooks/01_benchmark_all_models.ipynb
+# Set csv_path to your local copy of feature_master_latest.csv
+# Run all cells
+```
+
+## Citation
+
+If you use this code or dataset, please cite:
+
+```bibtex
+@article{buryi2025lux,
+  title   = {AI-Based Estimation of Indoor Illuminance from Smartphone Photographs:
+             A Pilot Study for Occupational Health Applications},
+  author  = {Buryi, Anton},
+  journal = {[Journal name]},
+  year    = {2025},
+  doi     = {[to be added]}
+}
+```
+
+Dataset citation:
+```bibtex
+@dataset{buryi2025dataset,
+  title   = {AI-Based Surface Illuminance Estimation Dataset:
+             Smartphone Image Database with Lux Meter Ground Truth},
+  author  = {Buryi, Anton},
+  year    = {2025},
+  doi     = {10.5281/zenodo.20499312},
+  url     = {https://doi.org/10.5281/zenodo.20499312}
+}
+```
+
+## License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
+## Contact
+
+Anton Buryi — GitHub: [@buryianton](https://github.com/buryianton)
